@@ -2,7 +2,7 @@
   <div class="col-sm-3 mg-b">
     <div class="card mb-4">
       <img class="card-img-top" :src="artist.photo" :alt="artist.prenom+' '+artist.nom">
-      <span class="text-white" style="padding: .75rem 1.25rem; margin-top:-2.35rem; background: linear-gradient(to top, black 0%, transparent 100%)">Nombre d'écoutes : <b>TODO</b></span>
+      <span class="text-white" style="padding: .75rem 1.25rem; margin-top:-2.35rem; background: linear-gradient(to top, black 0%, transparent 100%)">Nombre d'écoutes : <b>{{ playCount }}</b></span>
       <div class="card-body">
         <h5 class="card-title">
           {{artist.prenom}} {{artist.nom}}
@@ -28,6 +28,13 @@ export default {
         type: Object,
         required: true
       }
+    },
+    computed: {
+        playCount() {
+            return this.artist['albums'].reduce((total, album) =>
+                total + album.musiques.reduce((sum, musique) =>
+                    sum + musique.nombreEcoutes, 0), 0);
+        }
     }
   };
 </script>
